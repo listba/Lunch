@@ -5,6 +5,7 @@ using YelpSharp.Data.Options;
 using LunchWars.Domain;
 using System.Collections.Generic;
 using System.Linq;
+using Lunch.Models;
 
 namespace Lunch.Controllers
 {
@@ -27,12 +28,17 @@ namespace Lunch.Controllers
         }
 
         // GET api/values
-        public IEnumerable<Restaurant> GetRestaurants(int zip, int page = 0)
+        public IEnumerable<RestaurantModel> GetRestaurants()
         {
-            var rs = Enumerable.Empty<Restaurant>();
+            var rs = Enumerable.Empty<RestaurantModel>();
             using (var s = new LunchWarsEntities())
             {
-                rs = s.Set<Restaurant>();
+                rs = s.Set<Restaurant>().Select(r => new RestaurantModel
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    ImageUrl = r.ImageUrl
+                });
             }
             return rs;
 
