@@ -77,8 +77,8 @@
           </Key>
           <Property Name="TripId" Type="int" Nullable="false" />
           <Property Name="RestaurantId" Type="int" Nullable="false" />
-          <Property Name="Votes" Type="int" Nullable="false" />
-          <Property Name="Vetos" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="VoteTypeId" Type="int" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -87,6 +87,13 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VoteType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_RestaurantCategories_Categories">
           <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
@@ -172,6 +179,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TripVotes_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="TripVotes" Type="Self.TripVotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TripVotes">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripVotes_VoteType">
+          <End Role="VoteType" Type="Self.VoteType" Multiplicity="0..1" />
+          <End Role="TripVotes" Type="Self.TripVotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VoteType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TripVotes">
+              <PropertyRef Name="VoteTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="LunchWarsModelStoreContainer">
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LookupLength" EntityType="Self.LookupLength" Schema="dbo" store:Type="Tables" />
@@ -182,6 +213,7 @@
           <EntitySet Name="TripUsers" EntityType="Self.TripUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TripVotes" EntityType="Self.TripVotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VoteType" EntityType="Self.VoteType" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_RestaurantCategories_Categories" Association="Self.FK_RestaurantCategories_Categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="RestaurantCategories" EntitySet="RestaurantCategories" />
@@ -208,6 +240,14 @@
           </AssociationSet>
           <AssociationSet Name="FK_TripVotes_Trip" Association="Self.FK_TripVotes_Trip">
             <End Role="Trip" EntitySet="Trip" />
+            <End Role="TripVotes" EntitySet="TripVotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripVotes_Users" Association="Self.FK_TripVotes_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TripVotes" EntitySet="TripVotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripVotes_VoteType" Association="Self.FK_TripVotes_VoteType">
+            <End Role="VoteType" EntitySet="VoteType" />
             <End Role="TripVotes" EntitySet="TripVotes" />
           </AssociationSet>
         </EntityContainer>
@@ -298,10 +338,12 @@
           </Key>
           <Property Name="TripId" Type="Int32" Nullable="false" />
           <Property Name="RestaurantId" Type="Int32" Nullable="false" />
-          <Property Name="Votes" Type="Int32" Nullable="false" />
-          <Property Name="Vetos" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Restaurant" Relationship="Self.FK_TripVotes_Restaurants" FromRole="TripVotes" ToRole="Restaurants" />
           <NavigationProperty Name="Trip" Relationship="Self.FK_TripVotes_Trip" FromRole="TripVotes" ToRole="Trip" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="VoteTypeId" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="LunchWarsModel.FK_TripVotes_Users" FromRole="TripVote" ToRole="User" />
+          <NavigationProperty Name="VoteType" Relationship="LunchWarsModel.FK_TripVotes_VoteType" FromRole="TripVote" ToRole="VoteType" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -311,6 +353,7 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="TripUsers" Relationship="Self.FK_TripUsers_Users" FromRole="Users" ToRole="TripUsers" />
+          <NavigationProperty Name="TripVotes" Relationship="LunchWarsModel.FK_TripVotes_Users" FromRole="User" ToRole="TripVote" />
         </EntityType>
         <Association Name="FK_RestaurantCategories_Categories">
           <End Role="Categories" Type="Self.Category" Multiplicity="1" />
@@ -434,7 +477,48 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="TripUsers" EntitySet="TripUsers" />
           </AssociationSet>
+          <EntitySet Name="VoteTypes" EntityType="LunchWarsModel.VoteType" />
+          <AssociationSet Name="FK_TripVotes_Users" Association="LunchWarsModel.FK_TripVotes_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="TripVote" EntitySet="TripVotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripVotes_VoteType" Association="LunchWarsModel.FK_TripVotes_VoteType">
+            <End Role="VoteType" EntitySet="VoteTypes" />
+            <End Role="TripVote" EntitySet="TripVotes" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="VoteType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TripVotes" Relationship="LunchWarsModel.FK_TripVotes_VoteType" FromRole="VoteType" ToRole="TripVote" />
+        </EntityType>
+        <Association Name="FK_TripVotes_Users">
+          <End Type="LunchWarsModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="LunchWarsModel.TripVote" Role="TripVote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TripVote">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripVotes_VoteType">
+          <End Type="LunchWarsModel.VoteType" Role="VoteType" Multiplicity="0..1" />
+          <End Type="LunchWarsModel.TripVote" Role="TripVote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VoteType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TripVote">
+              <PropertyRef Name="VoteTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -515,11 +599,11 @@
           <EntitySetMapping Name="TripVotes">
             <EntityTypeMapping TypeName="LunchWarsModel.TripVote">
               <MappingFragment StoreEntitySet="TripVotes">
+                <ScalarProperty Name="VoteTypeId" ColumnName="VoteTypeId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="TripId" ColumnName="TripId" />
                 <ScalarProperty Name="RestaurantId" ColumnName="RestaurantId" />
-                <ScalarProperty Name="Votes" ColumnName="Votes" />
-                <ScalarProperty Name="Vetos" ColumnName="Vetos" />
-              </MappingFragment>
+                </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
@@ -528,6 +612,14 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VoteTypes">
+            <EntityTypeMapping TypeName="LunchWarsModel.VoteType">
+              <MappingFragment StoreEntitySet="VoteType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
