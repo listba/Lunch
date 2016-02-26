@@ -30,4 +30,12 @@ namespace Lunch.Models
 
         public int Votes { get; set; }
     }
+
+
+    public class RestaurantModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string ImageUrl { get; set; }
+    }
 }

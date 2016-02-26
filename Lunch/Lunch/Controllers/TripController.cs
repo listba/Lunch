@@ -17,7 +17,7 @@ namespace Lunch.Controllers
 
             using (var s = new LunchWarsEntities())
             {
-                var now = DateTime.Now.AddHours(1);
+                var now = DateTime.Now;
                 var o = s.Set<Trip>().Where(x => x.Date > now).ToList();
                 foreach (var trip in o)
                 {
