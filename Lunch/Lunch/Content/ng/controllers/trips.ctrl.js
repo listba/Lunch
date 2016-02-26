@@ -1,4 +1,8 @@
-﻿LunchWars.controller('trips',
+﻿// trip = { tripUsers, tripVotes }
+// tripUsers = { name, votes, isDriving, didAttend }
+// tripVotes = { trip, user, restaurant }
+
+LunchWars.controller('trips',
     ['$scope',
     function ($scope) {
         var r1 = { name: "Taco Bell", votes: 31 }

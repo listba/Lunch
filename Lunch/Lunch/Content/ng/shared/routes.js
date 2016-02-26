@@ -16,6 +16,16 @@
             controller: 'home',
             templateUrl: '../Content/ng/partials/home.tpl.html'
         })
+        .state('app.login', {
+            url: '/login',
+            controller: 'login',
+            templateUrl: '../Content/ng/partials/login.tpl.html'
+        })
+        .state('app.register', {
+            url: '/register',
+            controller: 'register',
+            templateUrl: '../Content/ng/partials/register.tpl.html'
+        })
         .state('app.trips', {
             url: '/trips',
             controller: 'trips',
