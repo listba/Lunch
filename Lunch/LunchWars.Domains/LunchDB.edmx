@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="LunchWarsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="LunchWarsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="Id" />
@@ -68,7 +68,7 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="Attended" Type="bit" Nullable="false" />
           <Property Name="IsDriving" Type="bit" Nullable="false" />
-          <Property Name="Credits" Type="int" Nullable="false" />
+          <Property Name="Votes" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TripVotes">
           <Key>
@@ -211,8 +211,7 @@
             <End Role="TripVotes" EntitySet="TripVotes" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LunchWarsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -291,6 +290,7 @@
           <Property Name="Credits" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Trip" Relationship="Self.FK_TripUsers_Trip" FromRole="TripUsers" ToRole="Trip" />
           <NavigationProperty Name="User" Relationship="Self.FK_TripUsers_Users" FromRole="TripUsers" ToRole="Users" />
+          <Property Name="Votes" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="TripVote">
           <Key>
@@ -505,11 +505,11 @@
           <EntitySetMapping Name="TripUsers">
             <EntityTypeMapping TypeName="LunchWarsModel.TripUser">
               <MappingFragment StoreEntitySet="TripUsers">
+                <ScalarProperty Name="Votes" ColumnName="Votes" />
                 <ScalarProperty Name="TripId" ColumnName="TripId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Attended" ColumnName="Attended" />
                 <ScalarProperty Name="IsDriving" ColumnName="IsDriving" />
-                <ScalarProperty Name="Credits" ColumnName="Credits" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
