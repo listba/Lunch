@@ -17,7 +17,7 @@ namespace Lunch.Controllers
 
             using (var s = new LunchWarsEntities())
             {
-                var now = DateTime.Now.AddHours(1);
+                var now = DateTime.Now;
                 var o = s.Set<Trip>().Where(x => x.Date > now).ToList();
                 foreach (var trip in o)
                 {
@@ -35,11 +35,34 @@ namespace Lunch.Controllers
                         Id = trip.Id,
                         Name = trip.Name
                     };
+                    var restaurants = new List<TripRestaurantModel>();
+
+                    var something = trip.TripVotes.Select(x => x.Restaurant).Distinct().ToList();
+
+                    foreach (var z in something)
+                    {
+                        var rmodel = new TripRestaurantModel
+                        {
+                            Name = z.Name,
+                            ImageUrl = z.ImageUrl,
+                            Id = z.Id,
+                            TripUsers =
+                                trip.TripVotes.Where(y => y.Restaurant.Name == z.Name).Select(x => x.User.Name).ToList(),
+                            Votes = trip.TripVotes.Count(x => x.Restaurant.Name == z.Name),
+
+                        };
+                       restaurants.Add(rmodel);
+                    }
+
+                    tripM.TripRestaurants = restaurants;
                     result.Add(tripM);
+                    
+
+
                 }
                 
             }
-
+            
             return result;
         }
 
