@@ -1,0 +1,19 @@
+﻿<div class="col-md-4 col-md-offset-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">Create Trip</h1>
+        </div>
+        <div class="panel-body">
+            <form ng-action="submit()">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control" type="text" ng-model="trip.name" />
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Create Trip</button>
+                </div>
+                <p class="text-center"><a ui-sref="app.trips">Cancel</a></p>
+            </form>
+        </div>
+    </div>
+</div>
