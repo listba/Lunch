@@ -1,0 +1,31 @@
+﻿<div class="col-md-4 col-md-offset-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">User Profile</h1>
+        </div>
+        <div class="panel-body">
+            <form ng-action="submit()">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input class="form-control" type="text" ng-model="user.username"/>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input class="form-control" type="text" ng-model="user.email" />
+                </div>
+                <div class="form-group">
+                    <label>Change Password</label>
+                    <input class="form-control" type="text" ng-model="user.password"/>
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input class="form-control" type="text" ng-model="user.ConfirmPassword"/>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+                </div>
+            </form>
+        </div>
+        
+    </div>
+</div>

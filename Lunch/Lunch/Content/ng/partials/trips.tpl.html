@@ -1,6 +1,6 @@
 ﻿<div class="row">
-    <div class="col-md-3" ng-repeat="trip in trips" >
-        <div class="trip">
+    <div class="col-md-3" ng-repeat="trip in trips">
+        <div class="trip" ng-click="goToTripDetails(trip.id)">
             <div class="trip-pic">{{trip.name}}</div>
             <div class="row">
                 <div class="col-md-4" ng-repeat="restaurant in trip.restaurants">
@@ -8,5 +8,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col-md-3">
+        <a class="new-trip" ui-sref="app.createTrip">+ Create a Trip</a>
     </div>
 </div>

@@ -8,13 +8,23 @@
             controller: "app",
             views: {
                 "nav": { templateUrl: "../Content/ng/shared/nav.tpl.html" },
-                "content": { template: "<div ui-view></div>" }
+                "content": { template: "<div class='app-container'><div ui-view></div></div>" }
             }
         })
-        .state('app.home', {
+        .state('app.trips', {
             url: '/',
-            controller: 'home',
-            templateUrl: '../Content/ng/partials/home.tpl.html'
+            controller: 'trips',
+            templateUrl: '../Content/ng/partials/trips.tpl.html'
+        })
+        .state('app.createTrip', {
+            url: '/trips/create',
+            controller: 'createTrip',
+            templateUrl: '../Content/ng/partials/create-trip.tpl.html'
+        })
+        .state('app.tripDetails', {
+            url: '/trips/:tripId',
+            controller: 'tripDetails',
+            templateUrl: '../Content/ng/partials/trip-details.tpl.html'
         })
         .state('app.login', {
             url: '/login',
@@ -26,14 +36,14 @@
             controller: 'register',
             templateUrl: '../Content/ng/partials/register.tpl.html'
         })
-        .state('app.trips', {
-            url: '/trips',
-            controller: 'trips',
-            templateUrl: '../Content/ng/partials/trips.tpl.html'
-        })
         .state('app.restaurants', {
             url: '/restaurants',
             controller: 'restaurants',
             templateUrl: '../Content/ng/partials/restaurants.tpl.html'
+        })
+        .state('app.profile', {
+            url: '/profile',
+            controller: 'profile',
+            templateUrl: '../Content/ng/partials/profile.tpl.html'
         });
 });
