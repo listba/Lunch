@@ -1,14 +1,10 @@
-﻿using RestSharp;
-using RestSharp.Authenticators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using YelpSharp;
 using YelpSharp.Data;
 using YelpSharp.Data.Options;
+using LunchWars.Domain;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Lunch.Controllers
 {
@@ -16,6 +12,7 @@ namespace Lunch.Controllers
     {
         private Yelp yApi;
         private Options options;
+
 
         public RestaurantsController()
         {
@@ -30,28 +27,60 @@ namespace Lunch.Controllers
         }
 
         // GET api/values
-        public SearchResults GetRestaurants(int zip, int page = 0)
+        public IEnumerable<Restaurant> GetRestaurants(int zip, int page = 0)
         {
-            var so = new SearchOptions
+            var rs = Enumerable.Empty<Restaurant>();
+            using (var s = new LunchWarsEntities())
             {
-                GeneralOptions = new GeneralOptions
-                {
-                    limit = 20,
-                    offset = page*20,
-                    term = "food"
-                },
-                LocationOptions = new LocationOptions
-                {
-                    location = zip.ToString()
-                },
-                LocaleOptions = new LocaleOptions
-                {
-                    
-                }
-            };
+                rs = s.Set<Restaurant>();
+            }
+            return rs;
 
-            return yApi.Search(so).Result;
         }
+
+        public bool PostAddRestaurant()
+        {
+
+        //    var so = new SearchOptions
+        //    {
+        //        GeneralOptions = new GeneralOptions
+        //        {
+        //            limit = 20,
+        //            offset = 0,
+        //            term = "food"
+        //        },
+        //        LocationOptions = new LocationOptions
+        //        {
+        //            location = "45242"
+        //        },
+        //        LocaleOptions = new LocaleOptions
+        //        {
+
+        //        }
+        //    };
+        //    var ef = new LunchWarsEntities();
+        //    for (int i = 0; i < 10; i++)
+        //    {
+        //        yApi.Search(so).Result.businesses.ForEach(b =>
+        //        {
+        //            var r = ef.Restaurants.Create();
+        //            r.Address = b.location.address.Length > 0 ? b.location.address[0] : "";
+        //            r.City = b.location.city;
+        //            r.YelpId = b.id;
+        //            r.Name = b.name;
+        //            r.Zip = b.location.postal_code;
+        //            r.State = b.location.state_code;
+        //            r.ImageUrl = b.image_url;
+
+        //            ef.Restaurants.Add(r);
+                    
+        //        });
+        //        ef.SaveChanges();
+        //        so.GeneralOptions.offset = i * 20;
+        //    }
+            return true;
+        }
+
 
     }
 }

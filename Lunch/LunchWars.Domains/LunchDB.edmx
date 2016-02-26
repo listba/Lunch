@@ -1,0 +1,649 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LunchWarsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LookupLength">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="tinyint" Nullable="false" />
+          <Property Name="Length" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RestaurantCategories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="RestaurantId" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Restaurants">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="YelpId" Type="nvarchar" MaxLength="250" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="Zip" Type="nvarchar" MaxLength="50" />
+          <Property Name="ImageUrl" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Trip">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Length" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TripUsers">
+          <Key>
+            <PropertyRef Name="TripId" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="TripId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Attended" Type="bit" Nullable="false" />
+          <Property Name="IsDriving" Type="bit" Nullable="false" />
+          <Property Name="Votes" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TripVotes">
+          <Key>
+            <PropertyRef Name="TripId" />
+            <PropertyRef Name="RestaurantId" />
+          </Key>
+          <Property Name="TripId" Type="int" Nullable="false" />
+          <Property Name="RestaurantId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="VoteTypeId" Type="int" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VoteType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_RestaurantCategories_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+          <End Role="RestaurantCategories" Type="Self.RestaurantCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RestaurantCategories">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RestaurantCategories_Restaurants">
+          <End Role="Restaurants" Type="Self.Restaurants" Multiplicity="1" />
+          <End Role="RestaurantCategories" Type="Self.RestaurantCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurants">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RestaurantCategories">
+              <PropertyRef Name="RestaurantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trip_LookupLength">
+          <End Role="LookupLength" Type="Self.LookupLength" Multiplicity="1" />
+          <End Role="Trip" Type="Self.Trip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LookupLength">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Trip">
+              <PropertyRef Name="Length" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripUsers_Trip">
+          <End Role="Trip" Type="Self.Trip" Multiplicity="1" />
+          <End Role="TripUsers" Type="Self.TripUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trip">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TripUsers">
+              <PropertyRef Name="TripId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripUsers_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="TripUsers" Type="Self.TripUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TripUsers">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripVotes_Restaurants">
+          <End Role="Restaurants" Type="Self.Restaurants" Multiplicity="1" />
+          <End Role="TripVotes" Type="Self.TripVotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurants">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TripVotes">
+              <PropertyRef Name="RestaurantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripVotes_Trip">
+          <End Role="Trip" Type="Self.Trip" Multiplicity="1" />
+          <End Role="TripVotes" Type="Self.TripVotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trip">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TripVotes">
+              <PropertyRef Name="TripId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripVotes_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="TripVotes" Type="Self.TripVotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TripVotes">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripVotes_VoteType">
+          <End Role="VoteType" Type="Self.VoteType" Multiplicity="0..1" />
+          <End Role="TripVotes" Type="Self.TripVotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VoteType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TripVotes">
+              <PropertyRef Name="VoteTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LunchWarsModelStoreContainer">
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LookupLength" EntityType="Self.LookupLength" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RestaurantCategories" EntityType="Self.RestaurantCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Restaurants" EntityType="Self.Restaurants" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trip" EntityType="Self.Trip" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TripUsers" EntityType="Self.TripUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TripVotes" EntityType="Self.TripVotes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VoteType" EntityType="Self.VoteType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_RestaurantCategories_Categories" Association="Self.FK_RestaurantCategories_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="RestaurantCategories" EntitySet="RestaurantCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RestaurantCategories_Restaurants" Association="Self.FK_RestaurantCategories_Restaurants">
+            <End Role="Restaurants" EntitySet="Restaurants" />
+            <End Role="RestaurantCategories" EntitySet="RestaurantCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trip_LookupLength" Association="Self.FK_Trip_LookupLength">
+            <End Role="LookupLength" EntitySet="LookupLength" />
+            <End Role="Trip" EntitySet="Trip" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripUsers_Trip" Association="Self.FK_TripUsers_Trip">
+            <End Role="Trip" EntitySet="Trip" />
+            <End Role="TripUsers" EntitySet="TripUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripUsers_Users" Association="Self.FK_TripUsers_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TripUsers" EntitySet="TripUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripVotes_Restaurants" Association="Self.FK_TripVotes_Restaurants">
+            <End Role="Restaurants" EntitySet="Restaurants" />
+            <End Role="TripVotes" EntitySet="TripVotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripVotes_Trip" Association="Self.FK_TripVotes_Trip">
+            <End Role="Trip" EntitySet="Trip" />
+            <End Role="TripVotes" EntitySet="TripVotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripVotes_Users" Association="Self.FK_TripVotes_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TripVotes" EntitySet="TripVotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripVotes_VoteType" Association="Self.FK_TripVotes_VoteType">
+            <End Role="VoteType" EntitySet="VoteType" />
+            <End Role="TripVotes" EntitySet="TripVotes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LunchWarsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="RestaurantCategories" Relationship="Self.FK_RestaurantCategories_Categories" FromRole="Categories" ToRole="RestaurantCategories" />
+        </EntityType>
+        <EntityType Name="LookupLength">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Byte" Nullable="false" />
+          <Property Name="Length" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Trips" Relationship="Self.FK_Trip_LookupLength" FromRole="LookupLength" ToRole="Trip" />
+        </EntityType>
+        <EntityType Name="RestaurantCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="RestaurantId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_RestaurantCategories_Categories" FromRole="RestaurantCategories" ToRole="Categories" />
+          <NavigationProperty Name="Restaurant" Relationship="Self.FK_RestaurantCategories_Restaurants" FromRole="RestaurantCategories" ToRole="Restaurants" />
+        </EntityType>
+        <EntityType Name="Restaurant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="YelpId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Zip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="RestaurantCategories" Relationship="Self.FK_RestaurantCategories_Restaurants" FromRole="Restaurants" ToRole="RestaurantCategories" />
+          <NavigationProperty Name="TripVotes" Relationship="Self.FK_TripVotes_Restaurants" FromRole="Restaurants" ToRole="TripVotes" />
+          <Property Name="ImageUrl" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Trip">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Length" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="LookupLength" Relationship="Self.FK_Trip_LookupLength" FromRole="Trip" ToRole="LookupLength" />
+          <NavigationProperty Name="TripUsers" Relationship="Self.FK_TripUsers_Trip" FromRole="Trip" ToRole="TripUsers" />
+          <NavigationProperty Name="TripVotes" Relationship="Self.FK_TripVotes_Trip" FromRole="Trip" ToRole="TripVotes" />
+        </EntityType>
+        <EntityType Name="TripUser">
+          <Key>
+            <PropertyRef Name="TripId" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="TripId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Attended" Type="Boolean" Nullable="false" />
+          <Property Name="IsDriving" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Trip" Relationship="Self.FK_TripUsers_Trip" FromRole="TripUsers" ToRole="Trip" />
+          <NavigationProperty Name="User" Relationship="Self.FK_TripUsers_Users" FromRole="TripUsers" ToRole="Users" />
+          <Property Name="Votes" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TripVote">
+          <Key>
+            <PropertyRef Name="TripId" />
+            <PropertyRef Name="RestaurantId" />
+          </Key>
+          <Property Name="TripId" Type="Int32" Nullable="false" />
+          <Property Name="RestaurantId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Restaurant" Relationship="Self.FK_TripVotes_Restaurants" FromRole="TripVotes" ToRole="Restaurants" />
+          <NavigationProperty Name="Trip" Relationship="Self.FK_TripVotes_Trip" FromRole="TripVotes" ToRole="Trip" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="VoteTypeId" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="LunchWarsModel.FK_TripVotes_Users" FromRole="TripVote" ToRole="User" />
+          <NavigationProperty Name="VoteType" Relationship="LunchWarsModel.FK_TripVotes_VoteType" FromRole="TripVote" ToRole="VoteType" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TripUsers" Relationship="Self.FK_TripUsers_Users" FromRole="Users" ToRole="TripUsers" />
+          <NavigationProperty Name="TripVotes" Relationship="LunchWarsModel.FK_TripVotes_Users" FromRole="User" ToRole="TripVote" />
+        </EntityType>
+        <Association Name="FK_RestaurantCategories_Categories">
+          <End Role="Categories" Type="Self.Category" Multiplicity="1" />
+          <End Role="RestaurantCategories" Type="Self.RestaurantCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RestaurantCategories">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trip_LookupLength">
+          <End Role="LookupLength" Type="Self.LookupLength" Multiplicity="1" />
+          <End Role="Trip" Type="Self.Trip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LookupLength">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Trip">
+              <PropertyRef Name="Length" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RestaurantCategories_Restaurants">
+          <End Role="Restaurants" Type="Self.Restaurant" Multiplicity="1" />
+          <End Role="RestaurantCategories" Type="Self.RestaurantCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurants">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RestaurantCategories">
+              <PropertyRef Name="RestaurantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripVotes_Restaurants">
+          <End Role="Restaurants" Type="Self.Restaurant" Multiplicity="1" />
+          <End Role="TripVotes" Type="Self.TripVote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurants">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TripVotes">
+              <PropertyRef Name="RestaurantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripUsers_Trip">
+          <End Role="Trip" Type="Self.Trip" Multiplicity="1" />
+          <End Role="TripUsers" Type="Self.TripUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trip">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TripUsers">
+              <PropertyRef Name="TripId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripVotes_Trip">
+          <End Role="Trip" Type="Self.Trip" Multiplicity="1" />
+          <End Role="TripVotes" Type="Self.TripVote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trip">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TripVotes">
+              <PropertyRef Name="TripId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripUsers_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="TripUsers" Type="Self.TripUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TripUsers">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LunchWarsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="LookupLengths" EntityType="Self.LookupLength" />
+          <EntitySet Name="RestaurantCategories" EntityType="Self.RestaurantCategory" />
+          <EntitySet Name="Restaurants" EntityType="Self.Restaurant" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Trips" EntityType="Self.Trip" />
+          <EntitySet Name="TripUsers" EntityType="Self.TripUser" />
+          <EntitySet Name="TripVotes" EntityType="Self.TripVote" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_RestaurantCategories_Categories" Association="Self.FK_RestaurantCategories_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="RestaurantCategories" EntitySet="RestaurantCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trip_LookupLength" Association="Self.FK_Trip_LookupLength">
+            <End Role="LookupLength" EntitySet="LookupLengths" />
+            <End Role="Trip" EntitySet="Trips" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RestaurantCategories_Restaurants" Association="Self.FK_RestaurantCategories_Restaurants">
+            <End Role="Restaurants" EntitySet="Restaurants" />
+            <End Role="RestaurantCategories" EntitySet="RestaurantCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripVotes_Restaurants" Association="Self.FK_TripVotes_Restaurants">
+            <End Role="Restaurants" EntitySet="Restaurants" />
+            <End Role="TripVotes" EntitySet="TripVotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripUsers_Trip" Association="Self.FK_TripUsers_Trip">
+            <End Role="Trip" EntitySet="Trips" />
+            <End Role="TripUsers" EntitySet="TripUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripVotes_Trip" Association="Self.FK_TripVotes_Trip">
+            <End Role="Trip" EntitySet="Trips" />
+            <End Role="TripVotes" EntitySet="TripVotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripUsers_Users" Association="Self.FK_TripUsers_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TripUsers" EntitySet="TripUsers" />
+          </AssociationSet>
+          <EntitySet Name="VoteTypes" EntityType="LunchWarsModel.VoteType" />
+          <AssociationSet Name="FK_TripVotes_Users" Association="LunchWarsModel.FK_TripVotes_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="TripVote" EntitySet="TripVotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripVotes_VoteType" Association="LunchWarsModel.FK_TripVotes_VoteType">
+            <End Role="VoteType" EntitySet="VoteTypes" />
+            <End Role="TripVote" EntitySet="TripVotes" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="VoteType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TripVotes" Relationship="LunchWarsModel.FK_TripVotes_VoteType" FromRole="VoteType" ToRole="TripVote" />
+        </EntityType>
+        <Association Name="FK_TripVotes_Users">
+          <End Type="LunchWarsModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="LunchWarsModel.TripVote" Role="TripVote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TripVote">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripVotes_VoteType">
+          <End Type="LunchWarsModel.VoteType" Role="VoteType" Multiplicity="0..1" />
+          <End Type="LunchWarsModel.TripVote" Role="TripVote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VoteType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TripVote">
+              <PropertyRef Name="VoteTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LunchWarsModelStoreContainer" CdmEntityContainer="LunchWarsEntities">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="LunchWarsModel.Category">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LookupLengths">
+            <EntityTypeMapping TypeName="LunchWarsModel.LookupLength">
+              <MappingFragment StoreEntitySet="LookupLength">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RestaurantCategories">
+            <EntityTypeMapping TypeName="LunchWarsModel.RestaurantCategory">
+              <MappingFragment StoreEntitySet="RestaurantCategories">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RestaurantId" ColumnName="RestaurantId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Restaurants">
+            <EntityTypeMapping TypeName="LunchWarsModel.Restaurant">
+              <MappingFragment StoreEntitySet="Restaurants">
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="YelpId" ColumnName="YelpId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="LunchWarsModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trips">
+            <EntityTypeMapping TypeName="LunchWarsModel.Trip">
+              <MappingFragment StoreEntitySet="Trip">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TripUsers">
+            <EntityTypeMapping TypeName="LunchWarsModel.TripUser">
+              <MappingFragment StoreEntitySet="TripUsers">
+                <ScalarProperty Name="Votes" ColumnName="Votes" />
+                <ScalarProperty Name="TripId" ColumnName="TripId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Attended" ColumnName="Attended" />
+                <ScalarProperty Name="IsDriving" ColumnName="IsDriving" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TripVotes">
+            <EntityTypeMapping TypeName="LunchWarsModel.TripVote">
+              <MappingFragment StoreEntitySet="TripVotes">
+                <ScalarProperty Name="VoteTypeId" ColumnName="VoteTypeId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TripId" ColumnName="TripId" />
+                <ScalarProperty Name="RestaurantId" ColumnName="RestaurantId" />
+                </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="LunchWarsModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VoteTypes">
+            <EntityTypeMapping TypeName="LunchWarsModel.VoteType">
+              <MappingFragment StoreEntitySet="VoteType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
