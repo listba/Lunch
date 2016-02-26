@@ -16,10 +16,12 @@ namespace LunchWars.Domain
     {
         public int TripId { get; set; }
         public int RestaurantId { get; set; }
-        public int Votes { get; set; }
-        public int Vetos { get; set; }
+        public Nullable<int> UserId { get; set; }
+        public Nullable<int> VoteTypeId { get; set; }
     
         public virtual Restaurant Restaurant { get; set; }
         public virtual Trip Trip { get; set; }
+        public virtual User User { get; set; }
+        public virtual VoteType VoteType { get; set; }
     }
 }
