@@ -1,6 +1,5 @@
 ﻿<div class="row">
     <div class="col-md-3" ng-repeat="trip in trips">
-        {{trip}}
         <div class="trip" ng-click="goToTripDetails(trip.Id)">
             <div class="trip-pic">{{trip.Name}}</div>
             <div class="row">
@@ -8,6 +7,7 @@
                     {{restaurant.Name}} <span>{{restaurant.Votes}}</span>
                 </div>
             </div>
+            <button class="btn btn-primary btn-block" ng-click="joinTrip(trip.Id)">Join Trip</button>
         </div>
     </div>
     <div class="col-md-3">

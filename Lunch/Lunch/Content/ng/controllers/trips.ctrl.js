@@ -14,4 +14,10 @@ LunchWars.controller('trips',
         $scope.goToTripDetails = function(tripId) {
             $state.go('app.tripDetails', { tripId: tripId });
         }
+
+        $scope.joinTrip = function(tripId) {
+            tripsApi.post({ tripId: tripId }, function(data) {
+
+            });
+        }
 }]);
