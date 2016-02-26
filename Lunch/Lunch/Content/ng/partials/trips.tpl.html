@@ -1,0 +1,16 @@
+﻿<div class="row">
+    <div class="col-md-3" ng-repeat="trip in trips">
+        {{trip}}
+        <div class="trip" ng-click="goToTripDetails(trip.Id)">
+            <div class="trip-pic">{{trip.Name}}</div>
+            <div class="row">
+                <div class="col-md-4" ng-repeat="restaurant in trip.restaurants">
+                    {{restaurant.Name}} <span>{{restaurant.Votes}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <a class="new-trip" ui-sref="app.createTrip">+ Create a Trip</a>
+    </div>
+</div>

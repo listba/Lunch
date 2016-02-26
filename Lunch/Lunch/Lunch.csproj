@@ -242,14 +242,28 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Content\css\lunchwars.css" />
+    <Content Include="Content\ng\controllers\app.ctrl.js" />
+    <Content Include="Content\ng\controllers\createTrip.ctrl.js" />
+    <Content Include="Content\ng\controllers\profile.ctrl.js" />
+    <Content Include="Content\ng\controllers\register.ctrl.js" />
+    <Content Include="Content\ng\controllers\login.ctrl.js" />
+    <Content Include="Content\ng\controllers\restaurants.ctrl.js" />
+    <Content Include="Content\ng\controllers\tripDetails.ctrl.js" />
+    <Content Include="Content\ng\controllers\trips.ctrl.js" />
+    <Content Include="Content\ng\partials\trip-details.tpl.html" />
+    <Content Include="Content\ng\partials\create-trip.tpl.html" />
+    <Content Include="Content\ng\partials\profile.tpl.html" />
+    <Content Include="Content\ng\partials\register.tpl.html" />
+    <Content Include="Content\ng\partials\login.tpl.html" />
+    <Content Include="Content\ng\partials\restaurants.tpl.html" />
+    <Content Include="Content\ng\partials\trips.tpl.html" />
+    <Content Include="Content\ng\shared\api.js" />
     <Content Include="Content\ng\shared\nav.tpl.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\ng\controllers\home.ctrl.js" />
     <Content Include="Content\ng\lib\ui-router.min.js" />
-    <Content Include="Content\ng\partials\home.tpl.html" />
-    <Content Include="Content\ng\shared\index.html" />
     <Content Include="Content\css\starter-template.css" />
     <Content Include="Content\ng\shared\LunchWars.js" />
     <Content Include="Scripts\bootstrap.js" />
