@@ -20,12 +20,14 @@ namespace Lunch.Controllers
             return o;
         }
 
-        public bool PostTrip(String name)
+        public bool PostTrip(string name)
         {
             using (var s = new LunchWarsEntities())
             {
                 var t = s.Trips.Create();
                 t.Name = name;
+                t.Date = DateTime.Now.AddHours(1);
+                t.Length = 2;
                 s.Trips.Add(t);
                 return s.SaveChanges() == 1;
             }
