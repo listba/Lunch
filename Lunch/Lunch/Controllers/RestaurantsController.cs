@@ -38,7 +38,7 @@ namespace Lunch.Controllers
                     Id = r.Id,
                     Name = r.Name,
                     ImageUrl = r.ImageUrl
-                });
+                }).ToList();
             }
             return rs;
 
