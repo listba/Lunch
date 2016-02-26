@@ -30,7 +30,7 @@ namespace Lunch.Controllers
         }
 
         // GET api/values
-        public IEnumerable<Business> GetRestaurants(int zip, int page = 0)
+        public SearchResults GetRestaurants(int zip, int page = 0)
         {
             var so = new SearchOptions
             {
@@ -50,8 +50,7 @@ namespace Lunch.Controllers
                 }
             };
 
-            var r = yApi.Search(so).Result;
-            return r.businesses;
+            return yApi.Search(so).Result;
         }
 
     }
