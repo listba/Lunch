@@ -18,6 +18,9 @@ namespace Lunch.Models
         public byte Length { get; set; }
 
         public List<UserModel> TripUsers {get;set;}
+
+        public List<TripRestaurantModel> TripRestaurants { get; set; }
+
     }
 
     public class UserModel
@@ -31,11 +34,26 @@ namespace Lunch.Models
         public int Votes { get; set; }
     }
 
-
-    public class RestaurantModel
+    public class TripRestaurantModel
     {
         public int Id { get; set; }
+
+        public string YelpId { get; set; }
+
         public string Name { get; set; }
+
+        public string Address { get; set; }
+
+        public string City { get; set; }
+
+        public string State { get; set; }
+
+        public string Zip { get; set; }
+
         public string ImageUrl { get; set; }
+
+        public int Votes { get; set; }
+
+        public List<String> TripUsers { get; set; }
     }
 }
