@@ -221,12 +221,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Content\ng\shared\nav.tpl.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\ng\controllers\home.ctrl.js" />
     <Content Include="Content\ng\lib\ui-router.min.js" />
-    <Content Include="Content\ng\partials\home.tmp.html" />
+    <Content Include="Content\ng\partials\home.tpl.html" />
     <Content Include="Content\ng\shared\index.html" />
     <Content Include="Content\css\starter-template.css" />
     <Content Include="Content\ng\shared\LunchWars.js" />
