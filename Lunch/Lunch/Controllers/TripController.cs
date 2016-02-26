@@ -54,5 +54,34 @@ namespace Lunch.Controllers
             }
             return false;
         }
+
+        public bool Vote(int tripId, int restaurantId)
+        {
+            var userId = HttpContext.Current.Request.Cookies["userId"];
+
+            var trips = Enumerable.Empty<Trip>();
+            var restaurants = Enumerable.Empty<Restaurant>();
+            using (var s = new LunchWarsEntities())
+            {
+                trips = s.Set<Trip>().Where(t => t.Id == tripId);
+                restaurants = s.Set<Restaurant>().Where(r => r.Id == restaurantId);
+                if (trips.Count() > 0 && restaurants.Count() > 0)
+                {
+                    var trip = trips.First();
+                    var restaurant = restaurants.First();
+
+                    var tr = s.TripVotes.Create();
+                    tr.TripId = tripId;
+                    tr.UserId = Convert.ToInt32(userId.Value);
+                    tr.RestaurantId = restaurantId;
+                    tr.VoteTypeId = 1;
+
+                    s.TripVotes.Add(tr);
+
+                    return s.SaveChanges() > 0;
+                }
+            }
+            return false;
+        }
     }
 }
