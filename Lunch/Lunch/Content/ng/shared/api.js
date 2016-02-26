@@ -1,7 +1,7 @@
-﻿var api = angular.module('LunchWars.Api', []);
-
-api.factory('RestaurantApi', [
+﻿LunchWars.factory('RestaurantsApi', [
     '$resource', function($resource) {
-        $resource('api/Restaurants/');
+        return $resource('api/Restaurants/', {
+            'get': { mthod: 'GET', isArray: false }
+        });
     }
 ]);

@@ -20,5 +20,10 @@
             url: '/trips',
             controller: 'trips',
             templateUrl: '../Content/ng/partials/trips.tpl.html'
+        })
+        .state('app.restaurants', {
+            url: '/restaurants',
+            controller: 'restaurants',
+            templateUrl: '../Content/ng/partials/restaurants.tpl.html'
         });
 });
