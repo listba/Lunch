@@ -6,7 +6,8 @@ LunchWars.controller('trips',
     ['$scope', '$state', 'TripsApi',
     function ($scope, $state, tripsApi) {
 
-        tripsApi.get({}, function(data) {
+        tripsApi.get({}, function (data) {
+            console.log(data);
             $scope.trips = data;
         });
 

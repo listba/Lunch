@@ -1,10 +1,11 @@
 ﻿<div class="row">
     <div class="col-md-3" ng-repeat="trip in trips">
-        <div class="trip" ng-click="goToTripDetails(trip.id)">
-            <div class="trip-pic">{{trip.name}}</div>
+        {{trip}}
+        <div class="trip" ng-click="goToTripDetails(trip.Id)">
+            <div class="trip-pic">{{trip.Name}}</div>
             <div class="row">
                 <div class="col-md-4" ng-repeat="restaurant in trip.restaurants">
-                    {{restaurant.name}} <span>{{restaurant.votes}}</span>
+                    {{restaurant.Name}} <span>{{restaurant.Votes}}</span>
                 </div>
             </div>
         </div>
