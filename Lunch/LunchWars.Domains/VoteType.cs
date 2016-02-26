@@ -15,14 +15,12 @@ namespace LunchWars.Domain
 using System;
     using System.Collections.Generic;
     
-public partial class Trip
+public partial class VoteType
 {
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    public Trip()
+    public VoteType()
     {
-
-        this.TripUsers = new HashSet<TripUser>();
 
         this.TripVotes = new HashSet<TripVote>();
 
@@ -33,17 +31,7 @@ public partial class Trip
 
     public string Name { get; set; }
 
-    public System.DateTime Date { get; set; }
 
-    public byte Length { get; set; }
-
-
-
-    public virtual LookupLength LookupLength { get; set; }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-
-    public virtual ICollection<TripUser> TripUsers { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
