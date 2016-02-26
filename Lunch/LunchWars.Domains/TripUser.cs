@@ -18,7 +18,7 @@ namespace LunchWars.Domain
         public int UserId { get; set; }
         public bool Attended { get; set; }
         public bool IsDriving { get; set; }
-        public int Credits { get; set; }
+        public int Votes { get; set; }
     
         public virtual Trip Trip { get; set; }
         public virtual User User { get; set; }
