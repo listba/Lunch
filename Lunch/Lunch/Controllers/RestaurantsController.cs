@@ -68,7 +68,7 @@ namespace Lunch.Controllers
                 }
             };
             var ef = new LunchWarsEntities();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 10; i++)
             {
                 yApi.Search(so).Result.businesses.ForEach(b =>
                 {
@@ -79,9 +79,10 @@ namespace Lunch.Controllers
                     r.Name = b.name;
                     r.Zip = b.location.postal_code;
                     r.State = b.location.state_code;
-                    r.Price = b.image_url;
+                    r.ImageUrl = b.image_url;
 
                     ef.Restaurants.Add(r);
+                    
                 });
                 ef.SaveChanges();
                 so.GeneralOptions.offset = i * 20;

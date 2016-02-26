@@ -38,7 +38,7 @@
           <Property Name="City" Type="nvarchar" MaxLength="50" />
           <Property Name="State" Type="nvarchar" MaxLength="50" />
           <Property Name="Zip" Type="nvarchar" MaxLength="50" />
-          <Property Name="Price" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="ImageUrl" Type="nvarchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -292,9 +292,9 @@
           <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Zip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Price" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <NavigationProperty Name="RestaurantCategories" Relationship="Self.FK_RestaurantCategories_Restaurants" FromRole="Restaurants" ToRole="RestaurantCategories" />
           <NavigationProperty Name="TripVotes" Relationship="Self.FK_TripVotes_Restaurants" FromRole="Restaurants" ToRole="TripVotes" />
+          <Property Name="ImageUrl" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -553,6 +553,7 @@
           <EntitySetMapping Name="Restaurants">
             <EntityTypeMapping TypeName="LunchWarsModel.Restaurant">
               <MappingFragment StoreEntitySet="Restaurants">
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="YelpId" ColumnName="YelpId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -560,7 +561,6 @@
                 <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="Zip" ColumnName="Zip" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
