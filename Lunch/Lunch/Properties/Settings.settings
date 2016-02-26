@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Lunch.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="yelpConsumerSecret" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">pHOqamCjojfeF7lCYK0M8LNqFsk</Value>
+    </Setting>
+    <Setting Name="yelpConsumerKey" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">-Kjrb9X92vaYOnoJTEsxPQ</Value>
+    </Setting>
+    <Setting Name="yelpToken" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">cwPNs9ACHPMu4nfzgfDdUZKKRXPk7wlz</Value>
+    </Setting>
+    <Setting Name="yelpSecret" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">JHdIfo9fgnT_VKRJymGQuDtKbIk</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
