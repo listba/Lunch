@@ -11,7 +11,7 @@
         <EntityTypeShape EntityType="LunchWarsModel.Restaurant" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="LunchWarsModel.sysdiagram" Width="1.5" PointX="7.75" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="LunchWarsModel.Trip" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="LunchWarsModel.TripUser" Width="1.5" PointX="5.25" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LunchWarsModel.TripUser" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="LunchWarsModel.TripVote" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="LunchWarsModel.User" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="LunchWarsModel.FK_RestaurantCategories_Categories" ManuallyRouted="false" />
@@ -21,6 +21,9 @@
         <AssociationConnector Association="LunchWarsModel.FK_TripUsers_Trip" ManuallyRouted="false" />
         <AssociationConnector Association="LunchWarsModel.FK_TripVotes_Trip" ManuallyRouted="false" />
         <AssociationConnector Association="LunchWarsModel.FK_TripUsers_Users" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="LunchWarsModel.VoteType" Width="1.5" PointX="7.375" PointY="4.875" />
+        <AssociationConnector Association="LunchWarsModel.FK_TripVotes_Users" />
+        <AssociationConnector Association="LunchWarsModel.FK_TripVotes_VoteType" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
