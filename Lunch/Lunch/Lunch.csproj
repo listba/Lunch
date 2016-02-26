@@ -236,6 +236,8 @@
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\ng\controllers\app.ctrl.js" />
+    <Content Include="Content\ng\controllers\trips.ctrl.js" />
+    <Content Include="Content\ng\partials\trips.tpl.html" />
     <Content Include="Content\ng\shared\api.js" />
     <Content Include="Content\ng\shared\nav.tpl.html" />
     <Content Include="favicon.ico" />
