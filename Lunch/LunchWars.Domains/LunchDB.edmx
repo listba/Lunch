@@ -287,7 +287,6 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="Attended" Type="Boolean" Nullable="false" />
           <Property Name="IsDriving" Type="Boolean" Nullable="false" />
-          <Property Name="Credits" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Trip" Relationship="Self.FK_TripUsers_Trip" FromRole="TripUsers" ToRole="Trip" />
           <NavigationProperty Name="User" Relationship="Self.FK_TripUsers_Users" FromRole="TripUsers" ToRole="Users" />
           <Property Name="Votes" Type="Int32" Nullable="false" />
